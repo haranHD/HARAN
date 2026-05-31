@@ -1,5 +1,6 @@
 // const User = require('../models/User');
 const userService = require('../services/userService');
+const userDTO = require('../DTO/userDto')
 
 //ADD USER
 exports.addUser = async (req, res) => {
@@ -25,7 +26,7 @@ exports.addUser = async (req, res) => {
 exports.getUser = async (req, res) => {
     try {
         const user = await userService.findUser();
-        return res.json(user);
+        return res.json(userDTO.usersResponseDTO(user));
     } catch (err) {
         return res.status(500).json({
             message: err.message
@@ -43,7 +44,7 @@ exports.getById = async (req, res) => {
                 message: "User Not Found!"
             })
         }
-        return res.status(200).json(user);
+        return res.status(200).json(userDTO.userResponseDTO(user));
     } catch (err) {
         return res.status(500).json({
             message: err.message
