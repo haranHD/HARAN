@@ -14,6 +14,26 @@ exports.getTask = async (req, res) => {
     res.status(200).json(task);
 }
 
+//Update Task:
+exports.updateTask = async (req, res) => {
+    try {
+        const task = await taskService.updateTask(
+            req.params.id,
+            req.body,
+        );
+        if (!task) {
+            res.status(404).json({ message: "Task Not Found!" });
+        }
+        else {
+            res.status(203).json(task);
+        }
+    } catch (err) {
+        res.status(400).json({
+            message: err
+        });
+    }
+}
+
 //Delete Task:
 exports.delTask = async (req, res) => {
     const task = await taskService.delTask(req.params.id);
