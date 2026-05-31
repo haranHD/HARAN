@@ -4,14 +4,33 @@ const taskService = require("../services/taskService");
 
 //Add Task:
 exports.addTask = async (req, res) => {
-    const task = await taskService.addTask(req.body);
-    res.status(201).json(task);
+    try {
+        const { title } = req.body;
+        if (!title || title.trim() === "") {
+            return res.status(400).json({
+                message: "Title can't be Empty or null"
+            })
+        }
+        const task = await taskService.addTask(req.body);
+        return res.status(201).json(task);
+    }
+    catch (err) {
+        return res.status(500).json({
+            message: err.message
+        })
+    }
 }
 
 //Get Task:
 exports.getTask = async (req, res) => {
-    const task = await taskService.getTask();
-    res.status(200).json(task);
+    try {
+        const task = await taskService.getTask();
+        return res.status(200).json(task);
+    } catch (err) {
+        return res.status(500).json({
+            message: err.message
+        })
+    }
 }
 
 //Update Task:
@@ -22,28 +41,33 @@ exports.updateTask = async (req, res) => {
             req.body,
         );
         if (!task) {
-            res.status(404).json({ message: "Task Not Found!" });
+            return res.status(404).json({ message: "Task Not Found!" });
         }
-        else {
-            res.status(203).json(task);
-        }
+
+        return res.status(200).json(task);
+
     } catch (err) {
-        res.status(400).json({
-            message: err
+        return res.status(500).json({
+            message: err.message
         });
     }
 }
 
 //Delete Task:
 exports.delTask = async (req, res) => {
-    const task = await taskService.delTask(req.params.id);
-    if (!task) {
-        res.status(404).json({
-            message: "Task Not Found!"
-        });
-    } else {
-        res.status(200).json({
+    try {
+        const task = await taskService.delTask(req.params.id);
+        if (!task) {
+            return res.status(404).json({
+                message: "Task Not Found!"
+            });
+        }
+        return res.status(200).json({
             message: "Task Deleted!"
         });
+    } catch (err) {
+        return res.status(500).json({
+            message: err.message
+        })
     }
 }
