@@ -1,10 +1,11 @@
+require('dotenv').config();//.env config
 const express = require('express');
 const app = express();
 
 const UserRouter = require('./routes/userRouter');
 const TaskRouter = require('./routes/taskRouter');
 
-require('../src/DB/db');
+require('./config/db');// DB config
 app.use(express.json());
 
 
