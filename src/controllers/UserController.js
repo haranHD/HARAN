@@ -1,6 +1,7 @@
 // const User = require('../models/User');
 const userService = require('../services/userService');
 const userDTO = require('../DTO/userDto')
+const Jwt = require('../utils/jwt');
 
 //ADD USER
 exports.addUser = async (req, res) => {
@@ -29,8 +30,10 @@ exports.login = async (req, res) => {
         const user = await userService.login(
             email, password
         );
+        const token = Jwt.generateJWT(user);
         return res.status(200).json({
-            message: "Login Successfull"
+            message: "Login Successfull",
+            token
         });
     } catch (err) {
         return res.status(401).json({
