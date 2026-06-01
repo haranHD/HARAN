@@ -22,6 +22,24 @@ exports.addUser = async (req, res) => {
     }
 }
 
+//LOGIN:
+exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await userService.login(
+            email, password
+        );
+        return res.status(200).json({
+            message: "Login Successfull"
+        });
+    } catch (err) {
+        return res.status(401).json({
+            message: err.message
+        });
+    }
+}
+
+
 //GET ALL USER
 exports.getUser = async (req, res) => {
     try {
