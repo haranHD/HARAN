@@ -20,3 +20,8 @@ exports.delUser = async (ID) => {
     return await User.findByIdAndDelete(ID);
 }
 
+//FIND BY EMAIL:
+exports.findEmail = async (email) => {
+    return await User.findOne({ email });
+}
+
