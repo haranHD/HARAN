@@ -42,6 +42,26 @@ exports.login = async (req, res) => {
     }
 }
 
+//PROFILE:
+exports.profile = async (req, res) => {
+    try {
+        const user = await userService.findById(req.user.userId);
+        if (!user) {
+            return res.status(404).json({
+                message: "User Not Found!"
+            });
+        }
+        return res.status(200).json(
+            userDTO.userResponseDTO(user)
+        );
+    } catch (err) {
+        return res.status(500).json({
+            message: err.message
+        });
+    }
+}
+
+
 
 //GET ALL USER
 exports.getUser = async (req, res) => {
