@@ -6,7 +6,14 @@ exports.addTask = async (task) => {
 }
 
 //GET TASKS:
-exports.findAll = async () => {
+exports.findAll = async (userId) => {
+    return await Task.find({
+        userId: userId
+    });
+}
+
+//GET ALL TASK;
+exports.getAllTask = async () => {
     return await Task.find();
 }
 
