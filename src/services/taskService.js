@@ -7,9 +7,15 @@ exports.addTask = async (tasks) => {
     return task;
 }
 
+//GET TASK:
+exports.getTask = async (userId) => {
+    const tasks = await taskRepo.findAll(userId);
+    return tasks;
+}
+
 //GET ALL TASK:
-exports.getTask = async () => {
-    const tasks = await taskRepo.findAll();
+exports.getAllTask = async () => {
+    const tasks = await taskRepo.getAllTask();
     return tasks;
 }
 
